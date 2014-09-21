@@ -1,5 +1,5 @@
 #include "HelloWorldScene.h"
-//#include "extensions/cocos-ext.h"
+#include "UITestScene.h"
 
 
 USING_NS_CC;
@@ -126,7 +126,7 @@ bool HelloWorld::init()
 	loadingBar->setDirection(LoadingBar::Direction::RIGHT);
 	loadingBar->setPosition(Vec2(200, 440));
 	_count = 0;
-	this->schedule(schedule_selector(HelloWorld::update, this),0.01f);
+	this->schedule(schedule_selector(HelloWorld::update),0.01f);
 	addChild(loadingBar,3);
 
 	// Create the text atlas
@@ -445,16 +445,8 @@ bool HelloWorld::init()
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-	return;
-#endif
 
-	Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
-#endif
+	Director::getInstance()->replaceScene(UITestScene::createScene());
 }
 
 void HelloWorld::TouchEvent(Ref*pSender ,TouchEventType type)
